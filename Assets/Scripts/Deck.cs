@@ -12,7 +12,13 @@ namespace Solitair
         {
             deck = new List<Card>();
             GenerateDeck();
-            ShuffleDeck(deck);
+            Shuffle(deck);
+
+            // Print list
+            for (int i = 0; i < deck.Count; i++)
+            {
+                deck[i].PrintCardInfo();
+            }
         }
 
         void Update()
@@ -34,20 +40,14 @@ namespace Solitair
         }
 
         // Fisher-Yates shuffle
-        private List<Card> ShuffleDeck (List<Card> list)
+        private List<T> Shuffle<T> (List<T> list)
         {
             for (int i = list.Count - 1; i > 0; i--)
             {
                 int rnd = UnityEngine.Random.Range(0, list.Count);
-                Card c = list[i];
+                T c = list[i];
                 list[i] = list[rnd];
                 list[rnd] = c;
-            }
-
-            // Print list
-            for (int i = 0; i < list.Count; i++)
-            {
-                list[i].PrintCardInfo();
             }
             return list;
         }
