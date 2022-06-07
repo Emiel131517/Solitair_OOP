@@ -14,12 +14,6 @@ namespace Solitair
             GenerateDeck();
             Shuffle(cards);
             CreateObjects();
-
-            // Print list
-            for (int i = 0; i < cards.Count; i++)
-            {
-                cards[i].PrintCardInfo();
-            }
         }
 
         void Update()
@@ -60,6 +54,19 @@ namespace Solitair
                 prefab.suit = card.suit;
                 Instantiate(prefab, transform.position, Quaternion.identity);
             }
+        }
+        public List<Card>Deal(int amount)
+        {
+            List<Card> temp = new List<Card>();
+            if (cards.Count < amount)
+            {
+                return temp;
+            }
+            for (int i = 0; i < amount; i++)
+            {
+                temp.Add(cards.RemoveAt(0));
+            }
+            return temp;
         }
     }
 }

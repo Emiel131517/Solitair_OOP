@@ -8,13 +8,20 @@ namespace Solitair {
         // Start is called before the first frame update
         void Start()
         {
-        
+            SetPosition();
         }
 
         // Update is called once per frame
         void Update()
         {
         
+        }
+        private void SetPosition()
+        {
+            foreach (Card card in cards)
+            {
+                card.transform.position = this.transform.position;
+            }
         }
     }
 }
