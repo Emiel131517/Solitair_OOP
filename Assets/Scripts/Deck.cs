@@ -7,18 +7,18 @@ namespace Solitair
 {
     public class Deck : MonoBehaviour
     {
-        public List<Card> deck;
+        public List<Card> cards;
         void Start()
         {
-            deck = new List<Card>();
+            cards = new List<Card>();
             GenerateDeck();
-            Shuffle(deck);
+            Shuffle(cards);
             CreateObjects();
 
             // Print list
-            for (int i = 0; i < deck.Count; i++)
+            for (int i = 0; i < cards.Count; i++)
             {
-                deck[i].PrintCardInfo();
+                cards[i].PrintCardInfo();
             }
         }
 
@@ -35,19 +35,7 @@ namespace Solitair
                 int v = i % 13;
                 Card c  = new Card();
                 c.SetCardStats(v, s);
-                deck.Add(c);
-            }
-
-            // return deck;
-        }
-        private void CreateObjects()
-        {
-            foreach(Card card in deck)
-            {
-                Card prefab = Resources.Load<Card>("Prefabs/Card");
-                prefab.value = card.value;
-                prefab.suit = card.suit;
-                Instantiate(prefab, transform.position, Quaternion.identity);
+                cards.Add(c);
             }
         }
         // Fisher-Yates shuffle
@@ -61,6 +49,17 @@ namespace Solitair
                 list[rnd] = s;
             }
             return list;
+        }
+        // Create objects of the cards from the list
+        private void CreateObjects()
+        {
+            foreach (Card card in cards)
+            {
+                Card prefab = Resources.Load<Card>("Prefabs/Card");
+                prefab.value = card.value;
+                prefab.suit = card.suit;
+                Instantiate(prefab, transform.position, Quaternion.identity);
+            }
         }
     }
 }

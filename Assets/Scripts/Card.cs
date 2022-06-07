@@ -11,20 +11,31 @@ namespace Solitair
         private SpriteRenderer sprRend;
         public int value;
         public Suit suit;
+        public bool isOpen;
 
         private void Start()
         {
             sprRend = GetComponentInChildren<SpriteRenderer>();
             SetSprite();
         }
+        // Print the type and the value of the card
         public void PrintCardInfo()
         {
             Debug.Log(value.ToString() + suit.ToString());
         }
+        // Set the sprite of the card
         public void SetSprite()
         {
-            sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
+            if (isOpen)
+            {
+                sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
+            }
+            else
+            {
+                sprRend.sprite = sprRend.sprite;
+            }
         }
+        // Set the value and the suit of the card
         public void SetCardStats(int v, Suit s)
         {
             value = v;
