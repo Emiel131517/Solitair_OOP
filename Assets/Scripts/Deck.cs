@@ -7,7 +7,9 @@ namespace Solitair
 {
     public class Deck : MonoBehaviour
     {
-        private List<Card> deck;
+        public List<Card> deck;
+        [SerializeField]
+        private Card prefab;
         void Start()
         {
             deck = new List<Card>();
@@ -31,11 +33,12 @@ namespace Solitair
             for (int i = 0; i < 52; i++)
             {
                 // Add card rank
-                Rank r = (Rank)Enum.ToObject(typeof(Rank), i / 13);
+                Suit s = (Suit)Enum.ToObject(typeof(Suit), i / 13);
+                Instantiate(prefab, transform.position, Quaternion.identity);
                 // Create a card with the value and the rank
-                Card c = new Card(i % 13, r);
+                prefab.SetCardStats(i % 13, s);
                 // Add the card to the list
-                deck.Add(c);
+                deck.Add(prefab);
             }
         }
 
