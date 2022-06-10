@@ -17,5 +17,12 @@ namespace Solitair
         {
 
         }
+        public void AddCardToList(List<Card> list)
+        {
+            foreach (Card card in list)
+            {
+                cards.Add(card);
+            }
+        }
     }
 }

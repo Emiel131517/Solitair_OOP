@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColumnManager : MonoBehaviour
+namespace Solitair
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ColumnManager : MonoBehaviour
     {
-        
-    }
+        public Deck deck;
+        public Column gameColumn1;
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+        private void Deal()
+        {
+            gameColumn1.AddCardToList(deck.TakeCard(1));
+        }
     }
 }
