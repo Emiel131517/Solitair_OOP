@@ -13,7 +13,7 @@ namespace Solitair
             cards = new List<Card>();
             GenerateDeck();
             //Shuffle(cards);
-            CreateObjects();
+            CreateObjectsInList();
         }
 
         void Update()
@@ -45,7 +45,7 @@ namespace Solitair
             return list;
         }
         // Create objects of the cards from the list
-        private void CreateObjects()
+        private void CreateObjectsInList()
         {
             for (int i = 0; i < cards.Count; i++)
             {
@@ -53,13 +53,9 @@ namespace Solitair
                 prefab.value = cards[i].value;
                 prefab.suit = cards[i].suit;
                 prefab.name = prefab.value.ToString() + prefab.suit.ToString();
-                Card test = Instantiate(prefab, transform.position, Quaternion.identity);
-                cards[i] = test;
+                Card card = Instantiate(prefab, transform.position, Quaternion.identity);
+                cards[i] = card;
             }
-        }
-        private void AddObjectToList()
-        {
-
         }
         public List<Card>TakeCard(int amount)
         {

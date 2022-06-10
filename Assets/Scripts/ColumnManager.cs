@@ -6,12 +6,14 @@ namespace Solitair
 {
     public class ColumnManager : MonoBehaviour
     {
-        public Deck deck;
-        public Column gameColumn1;
+        [SerializeField]
+        private Deck deck;
+        [SerializeField]
+        private List<GameColumn> gameColumns;
         // Start is called before the first frame update
         void Start()
         {
-
+            Deal();
         }
 
         // Update is called once per frame
@@ -21,7 +23,10 @@ namespace Solitair
         }
         private void Deal()
         {
-            gameColumn1.AddCardToList(deck.TakeCard(1));
+            for (int i = 0; i < gameColumns.Count; i++)
+            {
+                gameColumns[i].AddCardToList(deck.TakeCard(i + 1));
+            }
         }
     }
 }
