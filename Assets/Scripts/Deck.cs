@@ -7,29 +7,34 @@ namespace Solitair
 {
     public class Deck : MonoBehaviour
     {
-        public List<Card> cards;
+        public List<GameObject> cards;
         void Start()
         {
-            cards = new List<Card>();
+            cards = new List<GameObject>();
             GenerateDeck();
-            //Shuffle(cards);
-            CreateObjectsInList();
-        }
-
-        void Update()
-        {
-
+            Shuffle(cards);
         }
         // Generate a deck        
         private void GenerateDeck()
         {
             for (int i = 0; i < 52; i++)
             {
+                // Create suit and value
                 Suit s = (Suit)Enum.ToObject(typeof(Suit), i / 13);
                 int v = i % 13;
-                Card c  = new Card();
-                c.SetCardStats(v, s);
-                cards.Add(c);
+
+                // Get prefab as gameobject
+                GameObject prefab = Resources.Load<GameObject>("Prefabs/Card");
+
+                // Get card component from gameobject and assign value and suit
+                Card card = prefab.GetComponent<Card>();
+                card.value = v;
+                card.suit = s;
+                prefab.name = card.value.ToString() + card.suit.ToString();
+                
+                // Instantiate as gameobject and put it in the list
+                GameObject obj = Instantiate(prefab, transform.position, Quaternion.identity);
+                cards.Add(obj);
             }
         }
         // Fisher-Yates shuffle
@@ -44,22 +49,9 @@ namespace Solitair
             }
             return list;
         }
-        // Create objects of the cards from the list
-        private void CreateObjectsInList()
+        public List<GameObject> TakeCard(int amount)
         {
-            for (int i = 0; i < cards.Count; i++)
-            {
-                Card prefab = Resources.Load<Card>("Prefabs/Card");
-                prefab.value = cards[i].value;
-                prefab.suit = cards[i].suit;
-                prefab.name = prefab.value.ToString() + prefab.suit.ToString();
-                Card card = Instantiate(prefab, transform.position, Quaternion.identity);
-                cards[i] = card;
-            }
-        }
-        public List<Card>TakeCard(int amount)
-        {
-            List<Card> temp = new List<Card>();
+            List<GameObject> temp = new List<GameObject>();
             if (cards.Count < amount)
             {
                 return temp;

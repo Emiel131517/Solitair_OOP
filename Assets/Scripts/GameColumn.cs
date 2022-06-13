@@ -14,13 +14,13 @@ namespace Solitair {
         // Update is called once per frame
         void Update()
         {
-        
+
         }
         private void SetPosition()
         {
-            foreach (Card card in cards)
+            foreach (GameObject card in cards)
             {
-                card.transform.position = this.transform.position;
+                card.transform.position = transform.position;
             }
         }
     }

@@ -6,10 +6,10 @@ namespace Solitair
 {
     public class Column : MonoBehaviour
     {
-        public List<Card> cards;
+        public List<GameObject> cards;
         void Start()
         {
-            cards = new List<Card>();
+            cards = new List<GameObject>();
         }
 
         // Update is called once per frame
@@ -17,9 +17,9 @@ namespace Solitair
         {
 
         }
-        public void AddCardToList(List<Card> list)
+        public void AddCardToList(List<GameObject> list)
         {
-            foreach (Card card in list)
+            foreach (GameObject card in list)
             {
                 cards.Add(card);
             }

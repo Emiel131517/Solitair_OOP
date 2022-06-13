@@ -1020,7 +1020,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deck: {fileID: 1303208683}
-  gameColumn1: {fileID: 258025276}
+  gameColumns:
+  - {fileID: 258025276}
+  - {fileID: 1693871702}
+  - {fileID: 890031489}
+  - {fileID: 1722324370}
+  - {fileID: 961840359}
+  - {fileID: 2047403278}
+  - {fileID: 691836509}
 --- !u!1 &1693871699
 GameObject:
   m_ObjectHideFlags: 0
