@@ -24,5 +24,12 @@ namespace Solitair
                 cards.Add(card);
             }
         }
+        public virtual void SetPosition()
+        {
+            foreach (GameObject card in cards)
+            {
+                card.transform.position = this.transform.position;
+            }
+        }
     }
 }

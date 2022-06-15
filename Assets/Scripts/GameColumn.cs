@@ -8,19 +8,23 @@ namespace Solitair {
         // Start is called before the first frame update
         void Start()
         {
-            SetPosition();
+            
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            SetPosition();
         }
-        private void SetPosition()
+        public override void SetPosition()
         {
+            float yOffset = 0;
+            float zOffset = 0.03f;
             foreach (GameObject card in cards)
             {
-                card.transform.position = transform.position;
+                card.transform.position = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z + zOffset);
+                yOffset -= 0.25f;
+                zOffset -= 0.3f;
             }
         }
     }
