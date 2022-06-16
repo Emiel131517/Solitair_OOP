@@ -58,8 +58,17 @@ namespace Solitair
             }
             for (int i = 0; i < amount; i++)
             {
-                temp.Add(cards[i]);
-                cards.Remove(cards[i]);
+                temp.Add(cards[0]);
+                cards.Remove(cards[0]);
+            }
+            return temp;
+        }
+        public List<GameObject> TakeAllCards()
+        {
+            List<GameObject> temp = new List<GameObject>();
+            if (cards.Count < 0)
+            {
+                return temp;
             }
             return temp;
         }
