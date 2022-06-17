@@ -36,5 +36,9 @@ namespace Solitair
                 filledDeckBG.SetActive(true);
             }
         }
+        private void OnMouseDown()
+        {
+            Debug.Log("test");
+        }
     }
 }
