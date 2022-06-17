@@ -12,7 +12,7 @@ namespace Solitair
         public int value;
         public Suit suit;
         [SerializeField]
-        private bool isOpen;
+        public bool isOpen;
 
         private void Start()
         {
@@ -29,12 +29,21 @@ namespace Solitair
             Debug.Log(value.ToString() + suit.ToString());
         }
         // Set the sprite of the card
-        public void SetSprite()
+        public void OpenCard()
         {
             if (!isOpen)
             {
                 sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
                 isOpen = true;
+            }
+        }
+        public void CloseCard()
+        {
+            if (isOpen)
+            {
+                sprRend.sprite = Resources.Load<Sprite>("Sprites/card_back");
+                isOpen = false;
+                Debug.Log("Card Closed");
             }
         }
         // Set the value and the suit of the card

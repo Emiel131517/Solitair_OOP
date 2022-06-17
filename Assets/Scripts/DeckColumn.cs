@@ -7,6 +7,8 @@ namespace Solitair
     public class DeckColumn : Column
     {
         private GameObject filledDeckBG;
+        private int i = 0;
+        private float zoffset = 0;
         // Start is called before the first frame update
         void Start()
         {
@@ -36,9 +38,31 @@ namespace Solitair
                 filledDeckBG.SetActive(true);
             }
         }
+        private void FlipCardFromDeck()
+        {
+            if (i == cards.Count)
+            {
+                // TODO::reset deck
+                foreach (GameObject card in cards)
+                {
+                    if (card.GetComponent<Card>().isOpen)
+                    {
+                        card.GetComponent<Card>().CloseCard();
+                        card.transform.position = new Vector3(transform.position.x - 10, transform.position.y, 0);
+                    }
+                }
+                i = 0;
+                zoffset = 0;
+                Debug.Log("All cards flipped");
+            }
+            cards[i].transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + zoffset);
+            cards[i].GetComponent<Card>().OpenCard();
+            i++;
+            zoffset -= 0.1f;
+        }
         private void OnMouseDown()
         {
-            Debug.Log("test");
+            FlipCardFromDeck();  
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Solitair
             foreach (GameColumn gameColumn in gameColumns)
             {
                 int i = gameColumn.cards.Count - 1;
-                gameColumn.cards[i].GetComponent<Card>().SetSprite();
+                gameColumn.cards[i].GetComponent<Card>().OpenCard();
             }
         }
     }
