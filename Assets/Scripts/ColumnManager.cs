@@ -28,17 +28,29 @@ namespace Solitair
         }
         IEnumerator DealDelay()
         {
-            yield return new WaitForSeconds(0.05f);
-            Deal();
+            yield return new WaitForSeconds(0.01f);
+            StartCoroutine(Deal());
         }
-        private void Deal()
+        private IEnumerator Deal()
         {
-            for (int i = 0; i < gameColumns.Count; i++)
+            int i = 1;
+            foreach (GameColumn gameColumn in gameColumns)
             {
-                gameColumns[i].AddCardToList(deck.TakeCard(i + 1));
+                yield return new WaitForSeconds(0.1f);
+                gameColumn.AddCardToList(deck.TakeCard(i));
+                i++;
             }
             deckColumn.AddCardToList(deck.TakeCard(deck.cards.Count));
             dealt = true;
+            OpenTopCard();
+        }
+        private void OpenTopCard()
+        {
+            foreach (GameColumn gameColumn in gameColumns)
+            {
+                int i = gameColumn.cards.Count - 1;
+                gameColumn.cards[i].GetComponent<Card>().SetSprite();
+            }
         }
     }
 }

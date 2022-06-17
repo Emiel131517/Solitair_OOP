@@ -6,24 +6,34 @@ namespace Solitair
 {
     public class DeckColumn : Column
     {
+        private GameObject filledDeckBG;
         // Start is called before the first frame update
         void Start()
         {
-            
+            filledDeckBG = GameObject.Find("Deck_closed");
         }
 
         // Update is called once per frame
         void Update()
         {
-            SetPosition();
+            SetBackground();
         }
         public override void SetPosition()
         {
-            float zOffset = 0.03f;
             foreach (GameObject card in cards)
             {
-                card.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + zOffset);
-                zOffset -= 0.3f;
+                card.transform.position = new Vector3(transform.position.x - 100, transform.position.y, transform.position.z);
+            }
+        }
+        private void SetBackground()
+        {
+            if (cards.Count == 0)
+            {
+                filledDeckBG.SetActive(false);
+            }
+            else
+            {
+                filledDeckBG.SetActive(true);
             }
         }
     }
