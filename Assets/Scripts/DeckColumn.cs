@@ -40,20 +40,18 @@ namespace Solitair
         }
         private void FlipCardFromDeck()
         {
-            if (i == cards.Count)
+            if (i >= cards.Count)
             {
                 // TODO::reset deck
                 foreach (GameObject card in cards)
                 {
-                    if (card.GetComponent<Card>().isOpen)
-                    {
-                        card.GetComponent<Card>().CloseCard();
-                        card.transform.position = new Vector3(transform.position.x - 10, transform.position.y, 0);
-                    }
+                    card.GetComponent<Card>().CloseCard();
+                    card.transform.position = new Vector3(transform.position.x - 10, transform.position.y, 0);
                 }
                 i = 0;
                 zoffset = 0;
                 Debug.Log("All cards flipped");
+                return;
             }
             cards[i].transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + zoffset);
             cards[i].GetComponent<Card>().OpenCard();
