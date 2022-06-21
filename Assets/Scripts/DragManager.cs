@@ -8,6 +8,8 @@ namespace Solitair
     {
         private bool isDragging;
         [SerializeField]
+        private Vector3 oldPos;
+        [SerializeField]
         private GameObject selectedObj;
         // Start is called before the first frame update
         void Start()
@@ -26,8 +28,9 @@ namespace Solitair
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
-                if (hit.collider.gameObject.GetComponent<Card>().isDraggeble)
+                if (hit.collider.gameObject.GetComponent<Card>().isOpen)
                 {
+                    oldPos = hit.collider.gameObject.transform.position;
                     selectedObj = hit.collider.gameObject;
                     isDragging = true;
                 }
@@ -39,12 +42,18 @@ namespace Solitair
             if (Input.GetMouseButtonUp(0))
             {
                 isDragging = false;
+                ReleasedButton();
             }
         }
         private void DragObject(GameObject obj)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             obj.transform.position = new Vector3(mousePos.x, mousePos.y, -2);
+        }
+        private void ReleasedButton()
+        {
+            selectedObj.transform.position = oldPos;
+            selectedObj = null;
         }
     }
 }

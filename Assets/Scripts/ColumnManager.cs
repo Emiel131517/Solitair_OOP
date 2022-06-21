@@ -8,13 +8,12 @@ namespace Solitair
     public class ColumnManager : MonoBehaviour
     {
         [SerializeField]
-        private DeckColumn deckColumn;
+        public DeckColumn deckColumn = null;
         [SerializeField]
-        private Deck deck;
+        public Deck deck = null;
         [SerializeField]
-        private List<GameColumn> gameColumns;
+        public List<GameColumn> gameColumns = null;
 
-        private bool dealt;
         // Start is called before the first frame update
         void Start()
         {
@@ -42,7 +41,6 @@ namespace Solitair
                 i++;
             }
             deckColumn.AddCardToList(deck.TakeCard(deck.cards.Count));
-            dealt = true;
             OpenTopCard();
         }
         private void OpenTopCard()
