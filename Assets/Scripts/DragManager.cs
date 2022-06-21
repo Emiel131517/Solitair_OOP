@@ -6,6 +6,7 @@ namespace Solitair
 {
     public class DragManager : MonoBehaviour
     {
+        private LayerMask cardMask;
         private bool isDragging;
         [SerializeField]
         private Vector3 oldPos;
@@ -14,7 +15,7 @@ namespace Solitair
         // Start is called before the first frame update
         void Start()
         {
-
+            cardMask = LayerMask.GetMask("Card");
         }
 
         // Update is called once per frame
@@ -27,7 +28,7 @@ namespace Solitair
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, cardMask);
                 if (hit.collider.gameObject.GetComponent<Card>().isOpen)
                 {
                     oldPos = hit.collider.gameObject.transform.position;
@@ -54,6 +55,11 @@ namespace Solitair
         {
             selectedObj.transform.position = oldPos;
             selectedObj = null;
+        }
+        // TODO
+        private void CheckAboveWhatColumn()
+        {
+            // TODO
         }
     }
 }

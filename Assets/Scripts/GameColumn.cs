@@ -19,7 +19,7 @@ namespace Solitair {
         public override void SetPosition()
         {
             float yOffset = 0;
-            float zOffset = 0.03f;
+            float zOffset = -0.03f;
             foreach (GameObject card in cards)
             {
                 card.transform.position = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z + zOffset);
