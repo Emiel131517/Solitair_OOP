@@ -9,6 +9,8 @@ namespace Solitair
     public class Card : MonoBehaviour
     {
         private SpriteRenderer sprRend;
+        private bool isBeingDragged;
+        public bool isDraggeble;
         public int value;
         public Suit suit;
         [SerializeField]
@@ -21,28 +23,35 @@ namespace Solitair
         }
         private void Update()
         {
-
+            // Check if this card is being dragged and drag this card
+            if (isBeingDragged)
+            {
+                DragCard();
+            }
         }
-        // Print the type and the value of the card
+        // Print the type and the value of the card || FOR DEBUGGING
         public void PrintCardInfo()
         {
             Debug.Log(value.ToString() + suit.ToString());
         }
-        // Set the sprite of the card
+        // Set the sprite of the card when opened
         public void OpenCard()
         {
             if (!isOpen)
             {
                 sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
                 isOpen = true;
+                isDraggeble = true;
             }
         }
+        // Set the sprite of the card when closed
         public void CloseCard()
         {
             if (isOpen)
             {
                 sprRend.sprite = Resources.Load<Sprite>("Sprites/card_back");
                 isOpen = false;
+                isDraggeble = false;
                 Debug.Log("Card Closed");
             }
         }
@@ -51,6 +60,12 @@ namespace Solitair
         {
             value = v;
             suit = s;
+        }
+        // Drag this card
+        private void DragCard()
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = new Vector3(mousePos.x, mousePos.y, -5);
         }
     }
 }

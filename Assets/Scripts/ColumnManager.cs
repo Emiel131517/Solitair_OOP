@@ -38,6 +38,7 @@ namespace Solitair
             {
                 yield return new WaitForSeconds(0.1f);
                 gameColumn.AddCardToList(deck.TakeCard(i));
+                gameColumn.SetPosition();
                 i++;
             }
             deckColumn.AddCardToList(deck.TakeCard(deck.cards.Count));

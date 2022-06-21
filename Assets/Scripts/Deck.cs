@@ -49,6 +49,7 @@ namespace Solitair
             }
             return list;
         }
+        // Take a card from this list and put it in another list
         public List<GameObject> TakeCard(int amount)
         {
             List<GameObject> temp = new List<GameObject>();
@@ -60,15 +61,6 @@ namespace Solitair
             {
                 temp.Add(cards[0]);
                 cards.Remove(cards[0]);
-            }
-            return temp;
-        }
-        public List<GameObject> TakeAllCards()
-        {
-            List<GameObject> temp = new List<GameObject>();
-            if (cards.Count < 0)
-            {
-                return temp;
             }
             return temp;
         }

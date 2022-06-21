@@ -6,20 +6,26 @@ namespace Solitair
 {
     public class DeckColumn : Column
     {
+        // Background
         private GameObject filledDeckBG;
+        // Index
         private int i = 0;
+        // Zoffset
         private float zoffset = 0;
         // Start is called before the first frame update
         void Start()
         {
+            // Set background at start of the game
             filledDeckBG = GameObject.Find("Deck_closed");
         }
 
         // Update is called once per frame
         void Update()
         {
+            // Set the background
             SetBackground();
         }
+        // Set the position of each card
         public override void SetPosition()
         {
             foreach (GameObject card in cards)
@@ -27,9 +33,10 @@ namespace Solitair
                 card.transform.position = new Vector3(transform.position.x - 100, transform.position.y, transform.position.z);
             }
         }
+        // Set the backgroud based on the amound of cards left
         private void SetBackground()
         {
-            if (cards.Count == 0)
+            if (i == cards.Count)
             {
                 filledDeckBG.SetActive(false);
             }
@@ -38,19 +45,13 @@ namespace Solitair
                 filledDeckBG.SetActive(true);
             }
         }
-        private void FlipCardFromDeck()
+        // Open a card from the deck
+        private void OpenCardFromDeck()
         {
             if (i >= cards.Count)
             {
-                // TODO::reset deck
-                foreach (GameObject card in cards)
-                {
-                    card.GetComponent<Card>().CloseCard();
-                    card.transform.position = new Vector3(transform.position.x - 10, transform.position.y, 0);
-                }
-                i = 0;
-                zoffset = 0;
-                Debug.Log("All cards flipped");
+                // Reset the deck
+                ResetDeck();
                 return;
             }
             cards[i].transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + zoffset);
@@ -58,9 +59,21 @@ namespace Solitair
             i++;
             zoffset -= 0.1f;
         }
+        // Reset the deck
+        private void ResetDeck()
+        {
+            foreach (GameObject card in cards)
+            {
+                card.GetComponent<Card>().CloseCard();
+                card.transform.position = new Vector3(transform.position.x - 10, transform.position.y, 0);
+            }
+            i = 0;
+            zoffset = 0;
+            Debug.Log("All cards flipped");
+        }
         private void OnMouseDown()
         {
-            FlipCardFromDeck();  
+            OpenCardFromDeck();  
         }
     }
 }
