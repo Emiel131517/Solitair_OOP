@@ -27,10 +27,6 @@ namespace Solitair {
                 zOffset -= 0.3f;
             }
         }
-        public void PlaceCard(GameColumn obj)
-        {
-            
-        }
         public bool CheckIfSuitable(GameObject obj)
         {
             Card card = obj.GetComponent<Card>();
@@ -38,19 +34,22 @@ namespace Solitair {
             if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
                 (topCard.suit.ToString() == "CLUB" || topCard.suit.ToString() == "SPADE"))
             {
-                if (card.value == topCard.value + 1)
+                if (card.value == topCard.value - 1)
                 {
+                    Debug.Log("True");
                     return true;
                 }
             }
-            if ((card.suit.ToString() == "CLUB" || card.suit.ToString() == "SPADE") &&
+            else if ((card.suit.ToString() == "CLUB" || card.suit.ToString() == "SPADE") &&
                 (topCard.suit.ToString() == "HEART" || topCard.suit.ToString() == "DIAMOND"))
             {
                 if (card.value == topCard.value - 1)
                 {
+                    Debug.Log("True");
                     return true;
                 }
             }
+            Debug.Log("False");
             return false;
         }
     }

@@ -36,11 +36,11 @@ namespace Solitair
             foreach (GameColumn gameColumn in gameColumns)
             {
                 yield return new WaitForSeconds(0.1f);
-                gameColumn.AddCardToList(deck.TakeCard(i));
+                gameColumn.AddCardsToList(deck.TakeCard(i));
                 gameColumn.SetPosition();
                 i++;
             }
-            deckColumn.AddCardToList(deck.TakeCard(deck.cards.Count));
+            deckColumn.AddCardsToList(deck.TakeCard(deck.cards.Count));
             OpenTopCard();
         }
         private void OpenTopCard()

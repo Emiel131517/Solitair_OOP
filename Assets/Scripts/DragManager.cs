@@ -49,17 +49,25 @@ namespace Solitair
         private void DragObject(GameObject obj)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            obj.transform.position = new Vector3(mousePos.x, mousePos.y, -2);
+            obj.transform.position = new Vector3(mousePos.x, mousePos.y, -5);
         }
         private void ReleasedButton()
         {
             selectedObj.transform.position = oldPos;
+            CheckAboveWhatColumn();
             selectedObj = null;
         }
-        // TODO
         private void CheckAboveWhatColumn()
         {
-            // TODO
+            LayerMask gameColumnMask = LayerMask.GetMask("GameColumn");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, gameColumnMask);
+            GameColumn gameColumn = hit.collider.gameObject.GetComponent<GameColumn>();
+            if (gameColumn.CheckIfSuitable(selectedObj))
+            {
+                gameColumn.AddCardToTopOfList(selectedObj);
+                gameColumn.SetPosition();
+            }
         }
     }
 }

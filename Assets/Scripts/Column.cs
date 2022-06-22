@@ -17,12 +17,16 @@ namespace Solitair
         {
 
         }
-        public void AddCardToList(List<GameObject> list)
+        public void AddCardsToList(List<GameObject> list)
         {
             foreach (GameObject card in list)
             {
                 cards.Add(card);
             }
+        }
+        public void AddCardToTopOfList(GameObject card)
+        {
+            cards.Insert(cards.Count, card);
         }
         public virtual void SetPosition()
         {
