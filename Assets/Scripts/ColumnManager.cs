@@ -22,22 +22,24 @@ namespace Solitair
         {
 
         }
+        // Delay befor dealing after the game started
         IEnumerator DealDelay()
         {
             yield return new WaitForSeconds(0.01f);
             StartCoroutine(Deal());
         }
+        // Deal the cards to the right columns
         private IEnumerator Deal()
         {
             int i = 1;
             foreach (GameColumn gameColumn in gameColumns)
             {
                 yield return new WaitForSeconds(0.1f);
-                gameColumn.AddCardsToList(deck.TakeCard(i));
+                gameColumn.AddCardsListToList(deck.TakeCard(i));
                 gameColumn.SetPosition();
                 i++;
             }
-            deckColumn.AddCardsToList(deck.TakeCard(deck.cards.Count));
+            deckColumn.AddCardsListToList(deck.TakeCard(deck.cards.Count));
             OpenTopCard();
         }
         private void OpenTopCard()

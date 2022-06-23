@@ -16,6 +16,7 @@ namespace Solitair {
         {
 
         }
+        // Set the position of all cards from this column
         public override void SetPosition()
         {
             float yOffset = 0;
@@ -27,23 +28,30 @@ namespace Solitair {
                 zOffset -= 0.3f;
             }
         }
+        // Check if the given card fits ontop of the top card of this column
         public bool CheckIfSuitable(GameObject obj)
         {
             if (obj != null)
             {
+                
                 Card card = obj.GetComponent<Card>();
                 Card topCard = cards[cards.Count - 1].GetComponent<Card>();
+
+                // Check if the "color" is possible
                 if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
                     (topCard.suit.ToString() == "CLUB" || topCard.suit.ToString() == "SPADE"))
                 {
+                    // Check if the value is possible
                     if (card.value == topCard.value - 1)
                     {
                         return true;
                     }
                 }
+                // Check if the "color" is possible
                 else if ((card.suit.ToString() == "CLUB" || card.suit.ToString() == "SPADE") &&
                     (topCard.suit.ToString() == "HEART" || topCard.suit.ToString() == "DIAMOND"))
                 {
+                    // Check if the value is possible
                     if (card.value == topCard.value - 1)
                     {
                         return true;
