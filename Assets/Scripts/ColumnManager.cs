@@ -7,12 +7,9 @@ namespace Solitair
 {
     public class ColumnManager : MonoBehaviour
     {
-        [SerializeField]
-        public DeckColumn deckColumn = null;
-        [SerializeField]
-        public Deck deck = null;
-        [SerializeField]
-        public List<GameColumn> gameColumns = null;
+        public Deck deck;
+        public DeckColumn deckColumn;
+        public List<GameColumn> gameColumns;
 
         // Start is called before the first frame update
         void Start()

@@ -29,27 +29,27 @@ namespace Solitair {
         }
         public bool CheckIfSuitable(GameObject obj)
         {
-            Card card = obj.GetComponent<Card>();
-            Card topCard = cards[cards.Count - 1].GetComponent<Card>();
-            if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
-                (topCard.suit.ToString() == "CLUB" || topCard.suit.ToString() == "SPADE"))
+            if (obj != null)
             {
-                if (card.value == topCard.value - 1)
+                Card card = obj.GetComponent<Card>();
+                Card topCard = cards[cards.Count - 1].GetComponent<Card>();
+                if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
+                    (topCard.suit.ToString() == "CLUB" || topCard.suit.ToString() == "SPADE"))
                 {
-                    Debug.Log("True");
-                    return true;
+                    if (card.value == topCard.value - 1)
+                    {
+                        return true;
+                    }
+                }
+                else if ((card.suit.ToString() == "CLUB" || card.suit.ToString() == "SPADE") &&
+                    (topCard.suit.ToString() == "HEART" || topCard.suit.ToString() == "DIAMOND"))
+                {
+                    if (card.value == topCard.value - 1)
+                    {
+                        return true;
+                    }
                 }
             }
-            else if ((card.suit.ToString() == "CLUB" || card.suit.ToString() == "SPADE") &&
-                (topCard.suit.ToString() == "HEART" || topCard.suit.ToString() == "DIAMOND"))
-            {
-                if (card.value == topCard.value - 1)
-                {
-                    Debug.Log("True");
-                    return true;
-                }
-            }
-            Debug.Log("False");
             return false;
         }
     }

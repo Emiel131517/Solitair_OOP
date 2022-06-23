@@ -7,21 +7,24 @@ namespace Solitair
     public class DragManager : MonoBehaviour
     {
         private LayerMask cardMask;
+        private LayerMask gameColumnMask;
         private bool isDragging;
-        [SerializeField]
-        private Vector3 oldPos;
-        [SerializeField]
         private GameObject selectedObj;
         // Start is called before the first frame update
         void Start()
         {
             cardMask = LayerMask.GetMask("Card");
+            gameColumnMask = LayerMask.GetMask("GameColumn");
         }
 
         // Update is called once per frame
         void Update()
         {
             CheckForDragebleObject();
+            if (isDragging)
+            {
+                DragObject(selectedObj);
+            }
         }
         private void CheckForDragebleObject()
         {
@@ -29,21 +32,23 @@ namespace Solitair
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, cardMask);
-                if (hit.collider.gameObject.GetComponent<Card>().isOpen)
+                if (hit.collider != null)
                 {
-                    oldPos = hit.collider.gameObject.transform.position;
-                    selectedObj = hit.collider.gameObject;
-                    isDragging = true;
+                    Card card = hit.collider.gameObject.GetComponent<Card>();
+                    if (card != null)
+                    {
+                        if (card.isOpen)
+                        {
+                            selectedObj = card.gameObject;
+                            isDragging = true;
+                        }
+                    }
                 }
-            }
-            if (isDragging)
-            {
-                DragObject(selectedObj);
             }
             if (Input.GetMouseButtonUp(0))
             {
                 isDragging = false;
-                ReleasedButton();
+                DropToColumn();
             }
         }
         private void DragObject(GameObject obj)
@@ -51,22 +56,24 @@ namespace Solitair
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             obj.transform.position = new Vector3(mousePos.x, mousePos.y, -5);
         }
-        private void ReleasedButton()
+        private void DropToColumn()
         {
-            selectedObj.transform.position = oldPos;
-            CheckAboveWhatColumn();
-            selectedObj = null;
-        }
-        private void CheckAboveWhatColumn()
-        {
-            LayerMask gameColumnMask = LayerMask.GetMask("GameColumn");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, gameColumnMask);
-            GameColumn gameColumn = hit.collider.gameObject.GetComponent<GameColumn>();
-            if (gameColumn.CheckIfSuitable(selectedObj))
+
+            if (selectedObj != null && hit.collider != null)
             {
-                gameColumn.AddCardToTopOfList(selectedObj);
-                gameColumn.SetPosition();
+                GameColumn gameColumn = hit.collider.gameObject.GetComponent<GameColumn>();
+                if (gameColumn != null)
+                {
+                    if (gameColumn.CheckIfSuitable(selectedObj))
+                    {
+                        selectedObj.GetComponent<Card>().parentColumn.RemoveCard(selectedObj);
+                        gameColumn.AddCardToTopOfList(selectedObj);
+                    }
+                }
+                selectedObj.GetComponent<Card>().parentColumn.SetPosition();
+                selectedObj = null;
             }
         }
     }

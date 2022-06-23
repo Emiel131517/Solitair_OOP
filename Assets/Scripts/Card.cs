@@ -9,6 +9,7 @@ namespace Solitair
     public class Card : MonoBehaviour
     {
         private SpriteRenderer sprRend;
+        public Column parentColumn;
         public int value;
         public Suit suit;
         [SerializeField]

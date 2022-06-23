@@ -22,11 +22,28 @@ namespace Solitair
             foreach (GameObject card in list)
             {
                 cards.Add(card);
+                card.GetComponent<Card>().parentColumn = this;
             }
         }
         public void AddCardToTopOfList(GameObject card)
         {
             cards.Insert(cards.Count, card);
+            card.GetComponent<Card>().parentColumn = this;
+        }
+        public void AddCardToList(GameObject card)
+        {
+            cards.Add(card);
+            card.GetComponent<Card>().parentColumn = this;
+        }
+        public void RemoveCard(GameObject card)
+        {
+            cards.Remove(card);
+        }
+        public GameObject TakeCard(int index)
+        {
+            GameObject card = cards[index];
+            cards.RemoveAt(index);
+            return card;
         }
         public virtual void SetPosition()
         {
