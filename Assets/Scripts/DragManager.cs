@@ -9,12 +9,13 @@ namespace Solitair
         private LayerMask cardMask;
         private LayerMask gameColumnMask;
         private bool isDragging;
-        private GameObject selectedObj;
+        private List<GameObject> selectedObjs;
         // Start is called before the first frame update
         void Start()
         {
             cardMask = LayerMask.GetMask("Card");
             gameColumnMask = LayerMask.GetMask("GameColumn");
+            selectedObjs = new List<GameObject>();
         }
 
         // Update is called once per frame
@@ -23,7 +24,7 @@ namespace Solitair
             CheckForDragebleCard();
             if (isDragging)
             {
-                DragCard(selectedObj);
+                DragCard(selectedObjs) ;
             }
         }
         // Check for a card to drag
@@ -36,13 +37,17 @@ namespace Solitair
                 if (hit.collider != null)
                 {
                     Card card = hit.collider.gameObject.GetComponent<Card>();
-                    if (card != null)
+                    if (card != null && card.isOpen)
                     {
-                        if (card.isOpen)
+                        int cardIndex = card.parentColumn.cards.IndexOf(hit.collider.gameObject);
+                        if (card.parentColumn.cards.Count - 1 == cardIndex ||
+                            card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
                         {
-                            selectedObj = card.gameObject;
+                            Debug.Log("test");
+                            selectedObjs.Add(card.gameObject);
                             isDragging = true;
                         }
+                        // else get all the indexed above the hit card and add them to the list too
                     }
                 }
             }
@@ -53,10 +58,13 @@ namespace Solitair
             }
         }
         // Drag the given card
-        private void DragCard(GameObject obj)
+        private void DragCard(List<GameObject> objs)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            obj.transform.position = new Vector3(mousePos.x, mousePos.y, -5);
+            foreach(GameObject obj in objs)
+            {
+                obj.transform.position = new Vector3(mousePos.x, mousePos.y, -5);
+            }
         }
         // Drop the card to the new column if possible, otherwise return it to the old column
         private void DropToColumn()
@@ -64,25 +72,31 @@ namespace Solitair
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, gameColumnMask);
 
-            if (selectedObj != null)
+            if (selectedObjs.Count != 0)
             {
                 if (hit.collider != null)
                 {
                     GameColumn gameColumn = hit.collider.gameObject.GetComponent<GameColumn>();
                     if (gameColumn != null)
                     {
-                        if (gameColumn.CheckIfSuitable(selectedObj))
+                        foreach (GameObject obj in selectedObjs)
                         {
-                            Card card = selectedObj.GetComponent<Card>();
+                            if (gameColumn.CheckIfSuitable(obj))
+                            {
+                                Card card = obj.GetComponent<Card>();
 
-                            card.parentColumn.cards[card.parentColumn.cards.Count - 2].GetComponent<Card>().OpenCard();
-                            card.parentColumn.RemoveCard(selectedObj);
-                            gameColumn.AddCardToTopOfList(selectedObj);
+                                card.parentColumn.cards[card.parentColumn.cards.Count - 2].GetComponent<Card>().OpenCard();
+                                card.parentColumn.RemoveCard(obj);
+                                gameColumn.AddCardToTopOfList(obj);
+                            }
                         }
                     }
                 }
-                selectedObj.GetComponent<Card>().parentColumn.SetPosition();
-                selectedObj = null;
+                foreach (GameObject obj in selectedObjs)
+                {
+                    obj.GetComponent<Card>().parentColumn.SetPosition();
+                }
+                selectedObjs.Clear();
             }
         }
     }
