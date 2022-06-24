@@ -277,7 +277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 102420923}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 5.8466797}
+  m_LocalPosition: {x: 2, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1203067836}
@@ -1047,7 +1047,6 @@ GameObject:
   - component: {fileID: 1208075011}
   - component: {fileID: 1208075010}
   - component: {fileID: 1208075012}
-  - component: {fileID: 1208075014}
   - component: {fileID: 1208075013}
   m_Layer: 0
   m_Name: DeckButton
@@ -1160,27 +1159,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.75, y: 2.45}
   m_EdgeRadius: 0
---- !u!50 &1208075014
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1208075009}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1259294886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,8 +1527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9528913ea2f61e84e894697aa45f6887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckColumn: {fileID: 1208075012}
   deck: {fileID: 742109611}
+  deckColumn: {fileID: 1208075012}
   gameColumns:
   - {fileID: 283711691}
   - {fileID: 1694671854}
@@ -1625,8 +1603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d26021610a761d42b49746b921c5968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oldPos: {x: 0, y: 0, z: 0}
-  selectedObj: {fileID: 0}
 --- !u!4 &1594055638
 Transform:
   m_ObjectHideFlags: 0

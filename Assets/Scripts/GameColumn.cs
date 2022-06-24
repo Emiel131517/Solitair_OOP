@@ -35,10 +35,22 @@ namespace Solitair {
             {
                 
                 Card card = obj.GetComponent<Card>();
-                Card topCard = cards[cards.Count - 1].GetComponent<Card>();
+                Card topCard = null;
+                if (cards.Count > 0)
+                {
+                    topCard = cards[cards.Count - 1].GetComponent<Card>();
+                }
+
+                if (cards.Count == 0)
+                {
+                    if (card.value == 12)
+                    {
+                        return true;
+                    }
+                }
 
                 // Check if the "color" is possible
-                if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
+                else if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
                     (topCard.suit.ToString() == "CLUB" || topCard.suit.ToString() == "SPADE"))
                 {
                     // Check if the value is possible

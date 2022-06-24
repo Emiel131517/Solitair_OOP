@@ -15,10 +15,7 @@ namespace Solitair
         // Update is called once per frame
         void Update()
         {
-            if (cards.Count == 0)
-            {
-                cards.Clear();
-            }
+
         }
         // Add a list of cards to this list of cards
         public void AddCardsListToList(List<GameObject> list)

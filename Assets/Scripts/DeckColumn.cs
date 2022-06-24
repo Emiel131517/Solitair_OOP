@@ -8,13 +8,15 @@ namespace Solitair
     {
         private GameObject filledDeckBG;
         private Vector3 pos;
-        private int index = 0;
-        private float zoffset = 0;
+        private int index;
+        private float zoffset;
         // Start is called before the first frame update
         void Start()
         {
             // Set background at start of the game
             filledDeckBG = GameObject.Find("Deck_closed");
+            index = 0;
+            zoffset = 0;
         }
 
         // Update is called once per frame
@@ -59,13 +61,15 @@ namespace Solitair
             {
                 // Reset the deck
                 ResetDeck();
-                return;
             }
-            cards[index].transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + zoffset);
-            pos = cards[index].transform.position;
-            cards[index].GetComponent<Card>().OpenCard();
-            index++;
-            zoffset -= 0.1f;
+            else
+            {
+                cards[index].transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + zoffset);
+                pos = cards[index].transform.position;
+                cards[index].GetComponent<Card>().OpenCard();
+                index++;
+                zoffset -= 0.1f;
+            }
         }
         // Reset the deck
         private void ResetDeck()
