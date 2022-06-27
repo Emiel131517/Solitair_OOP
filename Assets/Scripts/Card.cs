@@ -3,56 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Solitair
+public enum Suit { HEART, DIAMOND, CLUB, SPADE };
+public class Card : MonoBehaviour
 {
-    public enum Suit { HEART, DIAMOND, CLUB, SPADE };
-    public class Card : MonoBehaviour
+    private SpriteRenderer sprRend;
+    public Column parentColumn;
+    public int value;
+    public Suit suit;
+    [SerializeField]
+    public bool isOpen;
+    public bool isSuitable;
+
+    private void Start()
     {
-        private SpriteRenderer sprRend;
-        public Column parentColumn;
-        public int value;
-        public Suit suit;
-        [SerializeField]
-        public bool isOpen;
-        public bool isSuitable;
+        sprRend = GetComponentInChildren<SpriteRenderer>();
+        sprRend.sprite = sprRend.sprite;
+    }
+    private void Update()
+    {
 
-        private void Start()
+    }
+    // Print the type and the value of the card || FOR DEBUGGING
+    public void PrintCardInfo()
+    {
+        Debug.Log(value.ToString() + suit.ToString());
+    }
+    // Set the sprite of the card when opened
+    public void OpenCard()
+    {
+        if (!isOpen)
         {
-            sprRend = GetComponentInChildren<SpriteRenderer>();
-            sprRend.sprite = sprRend.sprite;
+            sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
+            isOpen = true;
         }
-        private void Update()
+    }
+    // Set the sprite of the card when closed
+    public void CloseCard()
+    {
+        if (isOpen)
         {
-
+            sprRend.sprite = Resources.Load<Sprite>("Sprites/card_back");
+            isOpen = false;
         }
-        // Print the type and the value of the card || FOR DEBUGGING
-        public void PrintCardInfo()
-        {
-            Debug.Log(value.ToString() + suit.ToString());
-        }
-        // Set the sprite of the card when opened
-        public void OpenCard()
-        {
-            if (!isOpen)
-            {
-                sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
-                isOpen = true;
-            }
-        }
-        // Set the sprite of the card when closed
-        public void CloseCard()
-        {
-            if (isOpen)
-            {
-                sprRend.sprite = Resources.Load<Sprite>("Sprites/card_back");
-                isOpen = false;
-            }
-        }
-        // Set the value and the suit of the card
-        public void SetCardStats(int v, Suit s)
-        {
-            value = v;
-            suit = s;
-        }
+    }
+    // Set the value and the suit of the card
+    public void SetCardStats(int v, Suit s)
+    {
+        value = v;
+        suit = s;
     }
 }
