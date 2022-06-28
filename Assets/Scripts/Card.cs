@@ -22,11 +22,6 @@ public class Card : MonoBehaviour
     {
 
     }
-    // Print the type and the value of the card || FOR DEBUGGING
-    public void PrintCardInfo()
-    {
-        Debug.Log(value.ToString() + suit.ToString());
-    }
     // Set the sprite of the card when opened
     public void OpenCard()
     {
@@ -34,7 +29,6 @@ public class Card : MonoBehaviour
         {
             sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
             isOpen = true;
-            Debug.Log("Opened a Card --> " + gameObject);
         }
     }
     // Set the sprite of the card when closed

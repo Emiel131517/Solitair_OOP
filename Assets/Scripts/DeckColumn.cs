@@ -5,7 +5,6 @@ using UnityEngine;
 public class DeckColumn : Column
 {
     private GameObject filledDeckBG;
-    private Vector3 pos;
     private int index;
     private float zoffset;
     // Start is called before the first frame update
@@ -66,7 +65,6 @@ public class DeckColumn : Column
         else
         {
             cards[index].transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + zoffset);
-            // pos = cards[index].transform.position;
             cards[index].GetComponent<Card>().OpenCard();
             index++;
             zoffset -= 0.1f;
@@ -82,7 +80,6 @@ public class DeckColumn : Column
         }
         index = 0;
         zoffset = 0;
-        Debug.Log("All cards flipped");
     }
     private void OnMouseDown()
     {

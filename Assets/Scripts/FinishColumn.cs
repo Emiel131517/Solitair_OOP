@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FinishColumn : Column
 {
-    private bool isFinished;
+    public bool isFinished;
     private int indexValue;
     [SerializeField] private Suit suit;
     // Start is called before the first frame update
