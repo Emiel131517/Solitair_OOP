@@ -10,13 +10,17 @@ public class FinishColumn : Column
     // Start is called before the first frame update
     void Start()
     {
+        isFinished = false;
         indexValue = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (indexValue == 13)
+        {
+            isFinished = true;
+        }
     }
     public override void SetPosition()
     {

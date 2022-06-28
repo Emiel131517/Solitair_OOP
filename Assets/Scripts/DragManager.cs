@@ -7,7 +7,7 @@ public class DragManager : MonoBehaviour
     private LayerMask cardMask;
     private LayerMask columnMask;
     private bool isDragging;
-    private List<GameObject> selectedObjs;
+    [SerializeField] private List<GameObject> selectedObjs;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +52,6 @@ public class DragManager : MonoBehaviour
                         // Add the cards to the list of dragging cards
                         if (card.parentColumn.cards.Count > cardIndex)
                         {
-                            selectedObjs.Add(card.gameObject);
                             for (int i = cardIndex; i < card.parentColumn.cards.Count; i++)
                             {
                                 GameObject obj = card.parentColumn.cards[i];
@@ -60,8 +59,14 @@ public class DragManager : MonoBehaviour
                             }
                             isDragging = true;
                         }
+                        else
+                        {
+                            selectedObjs.Add(card.gameObject);
+                        }
                     }
 
+                    // Check if you take a card from a deckcolumn
+                    // Check the index and add it to the list of selected objects
                     if (card.parentColumn.GetComponent<DeckColumn>())
                     {
                         if (card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
@@ -70,6 +75,10 @@ public class DragManager : MonoBehaviour
                             isDragging = true;
                         }
                     }
+
+                    // Check if you take a card from a finishcolumn
+                    // Lower the indexvalue from the finishcolumn
+                    // Add the card to the list of selected objects
                     if (card.parentColumn.GetComponent<FinishColumn>())
                     {
                         card.parentColumn.GetComponent<FinishColumn>().LowerIndexValue(1);
@@ -103,44 +112,56 @@ public class DragManager : MonoBehaviour
     {
         // Set all the cards from the selected objects list to the position of the mouse
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float yoffset = 0;
         foreach (GameObject obj in objs)
         {
-            obj.transform.position = new Vector3(mousePos.x, mousePos.y, -5);
+            obj.transform.position = new Vector3(mousePos.x, mousePos.y + yoffset, -5);
+            //yoffset -= 0.35f;
         }
     }
     // Drop the card to the new column if possible, otherwise return it to the old column
     private void DropToColumn()
     {
         // Create a raycast that only hits columns
+        // Check if ther are items in the selected objects list
+        // Check if the raycast hit a collider
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, columnMask);
-
-        // Check if ther are items in the selected objects list
         if (selectedObjs.Count != 0)
         {
-            // Check if the raycast hit a collider
             if (hit.collider != null)
             {
-                // Create a gamecolumn from the raycast hit and check if the column is not null
+                // Create a gamecolumn from the raycast hit
+                // check if the column is not null
                 Column column = hit.collider.gameObject.GetComponent<Column>();
                 if (column != null)
                 {
+                    // Loop though the list of the selected objects
+                    // Check if the card in the selected objects list fits ontop of the other card in the column
                     foreach (GameObject obj in selectedObjs)
                     {
-                        // Check if the dropped card fits ontop of the other card in the column
                         if (column.CheckIfSuitable(obj))
                         {
-                            // Create a card from the object in the selected objects list
+                            // Create a card from the current object in the loop
+                            // Check if there rare more than 1 cards in the parent list of the card
                             Card card = obj.GetComponent<Card>();
-
-                            if (card.parentColumn.cards.Count > 1)
+                            if (card.parentColumn.GetComponent<DeckColumn>() && card.parentColumn.cards.Count > 1)
                             {
-                                // Open a card on the old column and remove the dragged cards from that list
+                                // Remove the card from the parent column list
+                                // Add the cards to the top of the new list
+                                card.parentColumn.RemoveCard(obj);
+                                column.AddCardToTopOfList(obj);
+                            }
+                            else if (!card.parentColumn.GetComponent<DeckColumn>() && card.parentColumn.cards.Count > 1)
+                            {
+                                // Open a card on the old column a
+                                // Remove the dragged cards from that list
                                 card.parentColumn.cards[card.parentColumn.cards.Count - 2].GetComponent<Card>().OpenCard();
                                 card.parentColumn.RemoveCard(obj);
                             }
                             else
                             {
+                                // Just clear the list instead of removing.
                                 card.parentColumn.cards.Clear();
                             }
                             // Add the cards to the top of the new list

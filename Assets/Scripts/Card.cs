@@ -34,6 +34,7 @@ public class Card : MonoBehaviour
         {
             sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
             isOpen = true;
+            Debug.Log("Opened a Card --> " + gameObject);
         }
     }
     // Set the sprite of the card when closed
