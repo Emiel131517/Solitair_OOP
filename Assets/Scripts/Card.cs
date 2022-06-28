@@ -12,7 +12,6 @@ public class Card : MonoBehaviour
     public Suit suit;
     [SerializeField]
     public bool isOpen;
-    public bool isSuitable;
 
     private void Start()
     {

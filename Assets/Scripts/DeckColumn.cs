@@ -22,6 +22,7 @@ public class DeckColumn : Column
     {
         // Set the background
         SetBackground();
+        // CheckIfClicked();
     }
     // Set the position of each card
     public override void SetPosition()
@@ -85,6 +86,21 @@ public class DeckColumn : Column
     }
     private void OnMouseDown()
     {
-        OpenCardFromDeck();  
+        OpenCardFromDeck();
     }
+    /*    private void CheckIfClicked()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10);
+                if (hit.collider != null)
+                {
+                    if (hit.collider.gameObject.GetComponent<DeckColumn>())
+                    {
+                        OpenCardFromDeck();
+                    }
+                }
+            }
+        }*/
 }
