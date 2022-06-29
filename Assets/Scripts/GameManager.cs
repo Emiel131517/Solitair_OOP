@@ -5,13 +5,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private List<FinishColumn> finishColumns;
+    private GameObject winScreen;
     void Start()
     {
         finishColumns = new List<FinishColumn>();
+        winScreen = GameObject.Find("WinScreen");
         for (int i = 0; i < 4; i++)
         {
             finishColumns.Add(GameObject.Find("Finish_" + i.ToString()).GetComponent<FinishColumn>());
         }
+        winScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -25,6 +28,6 @@ public class GameManager : MonoBehaviour
     }
     private void Finish()
     {
-
+        winScreen.SetActive(true);
     }
 }

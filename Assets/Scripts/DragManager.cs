@@ -113,10 +113,12 @@ public class DragManager : MonoBehaviour
         // Set all the cards from the selected objects list to the position of the mouse
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float yoffset = 0;
+        float zoffset = 0;
         foreach (GameObject obj in objs)
         {
-            obj.transform.position = new Vector3(mousePos.x, mousePos.y + yoffset, -5);
-            //yoffset -= 0.35f;
+            obj.transform.position = new Vector3(mousePos.x, mousePos.y + yoffset, -5 + zoffset);
+            yoffset -= 0.35f;
+            zoffset -= 0.1f;
         }
     }
     // Drop the card to the new column if possible, otherwise return it to the old column
@@ -145,18 +147,14 @@ public class DragManager : MonoBehaviour
                             // Create a card from the current object in the loop
                             // Check if there rare more than 1 cards in the parent list of the card
                             Card card = obj.GetComponent<Card>();
-                            if (card.parentColumn.GetComponent<DeckColumn>() && card.parentColumn.cards.Count > 1)
-                            {
-                                // Remove the card from the parent column list
-                                // Add the cards to the top of the new list
-                                card.parentColumn.RemoveCard(obj);
-                                column.AddCardToTopOfList(obj);
-                            }
-                            else if (!card.parentColumn.GetComponent<DeckColumn>() && card.parentColumn.cards.Count > 1)
+                            if (card.parentColumn.cards.Count > 1)
                             {
                                 // Open a card on the old column a
                                 // Remove the dragged cards from that list
-                                card.parentColumn.cards[card.parentColumn.cards.Count - 2].GetComponent<Card>().OpenCard();
+                                if (!card.parentColumn.GetComponent<DeckColumn>())
+                                {
+                                    card.parentColumn.cards[card.parentColumn.cards.Count - 2].GetComponent<Card>().OpenCard();
+                                }
                                 card.parentColumn.RemoveCard(obj);
                             }
                             else
