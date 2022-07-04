@@ -85,19 +85,7 @@ public class DragManager : MonoBehaviour
                         selectedObjs.Add(card.gameObject);
                         isDragging = true;
                     }
-                        // If there is only one card
-                        /*                        else
-                                            {
-                                                selectedObjs.Add(card.gameObject);
-                                                isDragging = true;
-                                            }*/
-                        /*                        if (card.parentColumn.cards.Count - 1 == cardIndex ||
-                            card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
-                                                {
-                                                    selectedObjs.Add(card.gameObject);
-                                                    isDragging = true;
-                                                }*/
-                    }
+                }
             }
         }
         // Check if the player stopped dragging

@@ -25,9 +25,14 @@ public class GameManager : MonoBehaviour
         {
             Finish();
         }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Finish();
+        }
     }
     private void Finish()
     {
         winScreen.SetActive(true);
+        Time.timeScale = 0;
     }
 }
