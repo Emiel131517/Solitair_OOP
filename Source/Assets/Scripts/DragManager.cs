@@ -7,6 +7,7 @@ public class DragManager : MonoBehaviour
     private LayerMask cardMask;
     private LayerMask columnMask;
     private bool isDragging;
+    private ObjectScaler objScaler;
     [SerializeField] private List<GameObject> selectedObjs;
     // Start is called before the first frame update
     void Start()
@@ -14,6 +15,7 @@ public class DragManager : MonoBehaviour
         cardMask = LayerMask.GetMask("Card");
         columnMask = LayerMask.GetMask("Column");
         selectedObjs = new List<GameObject>();
+        objScaler = gameObject.GetComponent<ObjectScaler>();
     }
 
     // Update is called once per frame
@@ -35,57 +37,62 @@ public class DragManager : MonoBehaviour
             // check if it hit a collider
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 10, cardMask);
-            if (hit.collider != null)
+            if (hit.collider == null)
             {
-                // Create a card from the hit collider
-                // Check if the card is assigned and if the card is open
-                Card card = hit.collider.gameObject.GetComponent<Card>();
-                if (card != null && card.isOpen)
+                return;
+            }
+            // Create a card from the hit collider
+            // Check if the card is assigned and if the card is open
+            Card card = hit.collider.gameObject.GetComponent<Card>();
+            if (card == null)
+            {
+                return;
+            }
+            if (!card.IsOpen)
+            {
+                return;
+            }
+            // Get the index of the card and assign it this cardIndex
+            // Check if the parent column of the card is a GameColumn
+            int cardIndex = card.parentColumn.cards.IndexOf(hit.collider.gameObject);
+            if (card.parentColumn.GetComponent<GameColumn>())
+            {
+                // Check if it is not the last card 
+                // Add the cards to the list of dragging cards
+                if (card.parentColumn.cards.Count > cardIndex)
                 {
-
-                    // Get the index of the card and assign it this cardIndex
-                    // Check if the parent column of the card is a GameColumn
-                    int cardIndex = card.parentColumn.cards.IndexOf(hit.collider.gameObject);
-                    if (card.parentColumn.GetComponent<GameColumn>())
+                    for (int i = cardIndex; i < card.parentColumn.cards.Count; i++)
                     {
-                        // Check if it is not the last card 
-                        // Add the cards to the list of dragging cards
-                        if (card.parentColumn.cards.Count > cardIndex)
-                        {
-                            for (int i = cardIndex; i < card.parentColumn.cards.Count; i++)
-                            {
-                                GameObject obj = card.parentColumn.cards[i];
-                                selectedObjs.Add(obj);
-                            }
-                            isDragging = true;
-                        }
-                        else
-                        {
-                            selectedObjs.Add(card.gameObject);
-                        }
+                        GameObject obj = card.parentColumn.cards[i];
+                        selectedObjs.Add(obj);
                     }
-
-                    // Check if you take a card from a deckcolumn
-                    // Check the index and add it to the list of selected objects
-                    if (card.parentColumn.GetComponent<DeckColumn>())
-                    {
-                        if (card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
-                        {
-                            selectedObjs.Add(card.gameObject);
-                            isDragging = true;
-                        }
-                    }
-
-                    // Check if you take a card from a finishcolumn
-                    // Lower the indexvalue from the finishcolumn
-                    // Add the card to the list of selected objects
-                    if (card.parentColumn.GetComponent<FinishColumn>())
-                    {
-                        card.parentColumn.GetComponent<FinishColumn>().LowerIndexValue(1);
-                        selectedObjs.Add(card.gameObject);
-                        isDragging = true;
-                    }
+                    isDragging = true;
                 }
+                else
+                {
+                    selectedObjs.Add(card.gameObject);
+                }
+            }
+
+            // Check if you take a card from a deckcolumn
+            // Check the index and add it to the list of selected objects
+            if (card.parentColumn.GetComponent<DeckColumn>())
+            {
+                if (card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
+                {
+                    selectedObjs.Add(card.gameObject);
+                    isDragging = true;
+                }
+            }
+
+            // Check if you take a card from a finishcolumn
+            // Lower the indexvalue from the finishcolumn
+            // Add the card to the list of selected objects
+            if (card.parentColumn.GetComponent<FinishColumn>())
+            {
+                card.parentColumn.GetComponent<FinishColumn>().LowerIndexValue(1);
+                selectedObjs.Add(card.gameObject);
+                isDragging = true;
             }
         }
         // Check if the player stopped dragging
@@ -105,6 +112,7 @@ public class DragManager : MonoBehaviour
         foreach (GameObject obj in objs)
         {
             obj.transform.position = new Vector3(mousePos.x, mousePos.y + yoffset, -5 + zoffset);
+            objScaler.IncreaseSize(obj, 0.25f);
             yoffset -= 0.35f;
             zoffset -= 0.1f;
         }
@@ -156,12 +164,13 @@ public class DragManager : MonoBehaviour
                     }
                 }
             }
-            // Always empty the list of selected objects even if no collider was hit
-            foreach (GameObject obj in selectedObjs)
-            {
-                obj.GetComponent<Card>().parentColumn.SetPosition();
-            }
-            selectedObjs.Clear();
         }
+        // Always empty the list of selected objects even if no collider was hit
+        foreach (GameObject obj in selectedObjs)
+        {
+            obj.GetComponent<Card>().parentColumn.SetPosition();
+            objScaler.DecreaseSize(obj, 0);
+        }
+        selectedObjs.Clear();
     }
 }

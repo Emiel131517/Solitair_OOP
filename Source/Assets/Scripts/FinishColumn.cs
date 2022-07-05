@@ -41,9 +41,9 @@ public class FinishColumn : Column
     public override bool CheckIfSuitable(GameObject obj)
     {
         Card card = obj.GetComponent<Card>();
-        if (card.suit == suit)
+        if (card._Suit == suit)
         {
-            if (card.value == indexValue)
+            if (card.Value == indexValue)
             {
                 indexValue++;
                 return true;

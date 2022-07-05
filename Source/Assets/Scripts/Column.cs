@@ -9,12 +9,6 @@ public abstract class Column : MonoBehaviour
     {
         cards = new List<GameObject>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     // Add a list of cards to this list of cards
     public void AddCardsListToList(List<GameObject> list)
     {

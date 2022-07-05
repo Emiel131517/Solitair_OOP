@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class GameColumn : Column
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     // Set the position of all cards from this column
     public override void SetPosition()
     {
@@ -42,28 +31,28 @@ public class GameColumn : Column
 
             if (cards.Count == 0)
             {
-                if (card.value == 12)
+                if (card.Value == 12)
                 {
                     return true;
                 }
             }
 
             // Check if the "color" is possible
-            else if ((card.suit.ToString() == "HEART" || card.suit.ToString() == "DIAMOND") &&
-                (topCard.suit.ToString() == "CLUB" || topCard.suit.ToString() == "SPADE"))
+            else if ((card._Suit.ToString() == "HEART" || card._Suit.ToString() == "DIAMOND") &&
+                (topCard._Suit.ToString() == "CLUB" || topCard._Suit.ToString() == "SPADE"))
             {
                 // Check if the value is possible
-                if (card.value == topCard.value - 1)
+                if (card.Value == topCard.Value - 1)
                 {
                     return true;
                 }
             }
             // Check if the "color" is possible
-            else if ((card.suit.ToString() == "CLUB" || card.suit.ToString() == "SPADE") &&
-                (topCard.suit.ToString() == "HEART" || topCard.suit.ToString() == "DIAMOND"))
+            else if ((card._Suit.ToString() == "CLUB" || card._Suit.ToString() == "SPADE") &&
+                (topCard._Suit.ToString() == "HEART" || topCard._Suit.ToString() == "DIAMOND"))
             {
                 // Check if the value is possible
-                if (card.value == topCard.value - 1)
+                if (card.Value == topCard.Value - 1)
                 {
                     return true;
                 }

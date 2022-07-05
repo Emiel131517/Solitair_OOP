@@ -26,9 +26,8 @@ public class Deck : MonoBehaviour
 
             // Get card component from gameobject and assign value and suit
             Card card = prefab.GetComponent<Card>();
-            card.value = v;
-            card.suit = s;
-            prefab.name = card.value.ToString() + card.suit.ToString();
+            card.SetCardStats(v, s);
+            prefab.name = card.Value.ToString() + card._Suit.ToString();
                 
             // Instantiate as gameobject and put it in the list
             GameObject obj = Instantiate(prefab, transform.position, Quaternion.identity);

@@ -24,6 +24,6 @@ public class TimeText : MonoBehaviour
         seconds = time%60;
         minutes = Mathf.Floor(time / 60);
 
-        txt.text = "Time playing: " + minutes + ":" + (int)seconds;
+        txt.text = "Time playing: " + string.Format("{0:00}:{1:00}", minutes, (int)seconds);
     }
 }

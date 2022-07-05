@@ -8,19 +8,19 @@ public class Card : MonoBehaviour
 {
     private SpriteRenderer sprRend;
     public Column parentColumn;
-    public int value;
-    public Suit suit;
     [SerializeField]
-    public bool isOpen;
+    private int value;
+    public int Value { get { return value; } }
+    [SerializeField]
+    private Suit suit;
+    public Suit _Suit { get { return suit; } }
+    private bool isOpen;
+    public bool IsOpen { get { return isOpen; } }
 
     private void Start()
     {
         sprRend = GetComponentInChildren<SpriteRenderer>();
         sprRend.sprite = sprRend.sprite;
-    }
-    private void Update()
-    {
-
     }
     // Set the sprite of the card when opened
     public void OpenCard()

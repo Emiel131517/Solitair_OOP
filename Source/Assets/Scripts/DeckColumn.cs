@@ -31,12 +31,12 @@ public class DeckColumn : Column
 
         foreach (GameObject card in cards)
         {
-            if (card.GetComponent<Card>().isOpen)
+            if (card.GetComponent<Card>().IsOpen)
             {
                 card.transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z + sPzoffset);
                 sPzoffset -= 0.1f;
             }
-            if (!card.GetComponent<Card>().isOpen)
+            if (!card.GetComponent<Card>().IsOpen)
             {
                 card.transform.position = new Vector3(transform.position.x - 5, transform.position.y, 0);
             }
