@@ -81,6 +81,10 @@ public class DeckColumn : Column
         index = 0;
         zoffset = 0;
     }
+    public void LowerIndex()
+    {
+        index--;
+    }
     private void OnMouseDown()
     {
         OpenCardFromDeck();

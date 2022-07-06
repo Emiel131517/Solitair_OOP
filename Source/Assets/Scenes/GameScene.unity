@@ -2050,7 +2050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &763608441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2993,8 +2993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9528913ea2f61e84e894697aa45f6887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck: {fileID: 742109611}
-  deckColumn: {fileID: 1208075012}
   gameColumns:
   - {fileID: 283711691}
   - {fileID: 1694671854}

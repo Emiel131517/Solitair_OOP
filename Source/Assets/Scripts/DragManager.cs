@@ -140,6 +140,10 @@ public class DragManager : MonoBehaviour
                     {
                         if (column.CheckIfSuitable(obj))
                         {
+                            if (obj.GetComponent<Card>().parentColumn.GetComponent<DeckColumn>()) 
+                            {
+                                obj.GetComponent<Card>().parentColumn.GetComponent<DeckColumn>().LowerIndex();
+                            }
                             // Create a card from the current object in the loop
                             // Check if there rare more than 1 cards in the parent list of the card
                             Card card = obj.GetComponent<Card>();

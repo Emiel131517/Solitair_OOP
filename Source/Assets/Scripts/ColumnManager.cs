@@ -5,13 +5,16 @@ using UnityEngine.Events;
 
 public class ColumnManager : MonoBehaviour
 {
-    public Deck deck;
-    public DeckColumn deckColumn;
-    public List<GameColumn> gameColumns;
+    private Deck deck;
+    private DeckColumn deckColumn;
+    [SerializeField]
+    private List<GameColumn> gameColumns;
 
     // Start is called before the first frame update
     void Start()
     {
+        deck = GameObject.Find("Deck").GetComponent<Deck>();
+        deckColumn = GameObject.Find("DeckButton").GetComponent<DeckColumn>();
         StartCoroutine(DealDelay());
     }
 
