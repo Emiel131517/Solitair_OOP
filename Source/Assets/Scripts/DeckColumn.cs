@@ -7,11 +7,13 @@ public class DeckColumn : Column
     private GameObject filledDeckBG;
     private int index;
     private float zoffset;
+    private AudioSource flipSound;
     // Start is called before the first frame update
     void Start()
     {
         // Set background at start of the game
         filledDeckBG = GameObject.Find("Deck_closed");
+        flipSound = gameObject.GetComponent<AudioSource>();
         index = 0;
         zoffset = 0;
     }
@@ -88,5 +90,6 @@ public class DeckColumn : Column
     private void OnMouseDown()
     {
         OpenCardFromDeck();
+        flipSound.Play();
     }
 }
