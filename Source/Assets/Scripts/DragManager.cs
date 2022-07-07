@@ -83,7 +83,6 @@ public class DragManager : MonoBehaviour
                 if (card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
                 {
                     selectedObjs.Add(card.gameObject);
-                    card.parentColumn.GetComponent<DeckColumn>().LowerIndex();
                     isDragging = true;
                 }
             }
@@ -147,6 +146,10 @@ public class DragManager : MonoBehaviour
                             // Create a card from the current object in the loop
                             // Check if there rare more than 1 cards in the parent list of the card
                             Card card = obj.GetComponent<Card>();
+                            if (card.parentColumn.GetComponent<DeckColumn>())
+                            {
+                                card.parentColumn.GetComponent<DeckColumn>().LowerIndex();
+                            }
                             if (card.parentColumn.cards.Count > 1)
                             {
                                 // Open a card on the old column a
@@ -168,6 +171,8 @@ public class DragManager : MonoBehaviour
                     }
                 }
             }
+            soundfx.pitch = 1.1f;
+            soundfx.Play();
         }
         // Always empty the list of selected objects even if no collider was hit
         foreach (GameObject obj in selectedObjs)
@@ -175,8 +180,6 @@ public class DragManager : MonoBehaviour
             obj.GetComponent<Card>().parentColumn.SetPosition();
             objScaler.DecreaseSize(obj, 0);
         }
-        soundfx.pitch = 1.1f;
-        soundfx.Play();
         selectedObjs.Clear();
     }
 }

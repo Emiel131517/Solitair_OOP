@@ -27,6 +27,7 @@ public class Card : MonoBehaviour
     {
         if (!isOpen)
         {
+            Debug.Log("Opened: " + suit + value);
             sprRend.sprite = Resources.Load<Sprite>("Sprites/" + value.ToString() + suit.ToString());
             isOpen = true;
         }
