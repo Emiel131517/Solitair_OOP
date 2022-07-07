@@ -9,12 +9,14 @@ public class ColumnManager : MonoBehaviour
     private DeckColumn deckColumn;
     [SerializeField]
     private List<GameColumn> gameColumns;
+    private AudioSource flipSound;
 
     // Start is called before the first frame update
     void Start()
     {
         deck = GameObject.Find("Deck").GetComponent<Deck>();
         deckColumn = GameObject.Find("DeckButton").GetComponent<DeckColumn>();
+        flipSound = gameObject.GetComponent<AudioSource>();
         StartCoroutine(DealDelay());
     }
 
@@ -35,9 +37,10 @@ public class ColumnManager : MonoBehaviour
         int i = 1;
         foreach (GameColumn gameColumn in gameColumns)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.3f);
             gameColumn.AddCardsListToList(deck.TakeCard(i));
             gameColumn.SetPosition();
+            flipSound.Play();
             i++;
         }
         deckColumn.AddCardsListToList(deck.TakeCard(deck.cards.Count));

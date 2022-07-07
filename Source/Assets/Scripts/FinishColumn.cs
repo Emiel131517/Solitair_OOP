@@ -5,19 +5,17 @@ using UnityEngine;
 public class FinishColumn : Column
 {
     public bool isFinished;
-    private int indexValue;
     [SerializeField] private Suit suit;
     // Start is called before the first frame update
     void Start()
     {
         isFinished = false;
-        indexValue = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (indexValue == 13)
+        if (cards.Count == 13)
         {
             isFinished = true;
         }
@@ -31,21 +29,13 @@ public class FinishColumn : Column
             zOffset -= 0.3f;
         }
     }
-    public void LowerIndexValue(int value)
-    {
-        if (indexValue > 0)
-        {
-            indexValue -= value;
-        }
-    }
     public override bool CheckIfSuitable(GameObject obj)
     {
         Card card = obj.GetComponent<Card>();
         if (card._Suit == suit)
         {
-            if (card.Value == indexValue)
+            if (card.Value == cards.Count)
             {
-                indexValue++;
                 return true;
             }
         }

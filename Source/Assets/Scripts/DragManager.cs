@@ -8,6 +8,7 @@ public class DragManager : MonoBehaviour
     private LayerMask columnMask;
     private bool isDragging;
     private ObjectScaler objScaler;
+    private AudioSource soundfx;
     [SerializeField] private List<GameObject> selectedObjs;
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,7 @@ public class DragManager : MonoBehaviour
         columnMask = LayerMask.GetMask("Column");
         selectedObjs = new List<GameObject>();
         objScaler = gameObject.GetComponent<ObjectScaler>();
+        soundfx = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -81,6 +83,7 @@ public class DragManager : MonoBehaviour
                 if (card.parentColumn.cards.Count - card.parentColumn.cards.Count + cardIndex == cardIndex)
                 {
                     selectedObjs.Add(card.gameObject);
+                    card.parentColumn.GetComponent<DeckColumn>().LowerIndex();
                     isDragging = true;
                 }
             }
@@ -90,10 +93,11 @@ public class DragManager : MonoBehaviour
             // Add the card to the list of selected objects
             if (card.parentColumn.GetComponent<FinishColumn>())
             {
-                card.parentColumn.GetComponent<FinishColumn>().LowerIndexValue(1);
                 selectedObjs.Add(card.gameObject);
                 isDragging = true;
             }
+            soundfx.pitch = 1.5f;
+            soundfx.Play();
         }
         // Check if the player stopped dragging
         if (Input.GetMouseButtonUp(0))
@@ -140,10 +144,6 @@ public class DragManager : MonoBehaviour
                     {
                         if (column.CheckIfSuitable(obj))
                         {
-                            if (obj.GetComponent<Card>().parentColumn.GetComponent<DeckColumn>()) 
-                            {
-                                obj.GetComponent<Card>().parentColumn.GetComponent<DeckColumn>().LowerIndex();
-                            }
                             // Create a card from the current object in the loop
                             // Check if there rare more than 1 cards in the parent list of the card
                             Card card = obj.GetComponent<Card>();
@@ -175,6 +175,8 @@ public class DragManager : MonoBehaviour
             obj.GetComponent<Card>().parentColumn.SetPosition();
             objScaler.DecreaseSize(obj, 0);
         }
+        soundfx.pitch = 1.1f;
+        soundfx.Play();
         selectedObjs.Clear();
     }
 }
