@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 {
     private List<FinishColumn> finishColumns;
     private GameObject winScreen;
+    public List<GameObject> cards;
+    [SerializeField] private bool canAutoComplete;
     void Start()
     {
+        cards = new List<GameObject>();
         finishColumns = new List<FinishColumn>();
         winScreen = GameObject.Find("WinScreen");
         for (int i = 0; i < 4; i++)
@@ -29,10 +32,30 @@ public class GameManager : MonoBehaviour
         {
             Finish();
         }
+        CheckIfCanAutoComplete();
+        if (canAutoComplete)
+        {
+            AutoComplete();
+        }
+        
     }
     private void Finish()
     {
         winScreen.SetActive(true);
         Time.timeScale = 0;
+    }
+    private void CheckIfCanAutoComplete()
+    {
+        foreach (GameObject obj in cards)
+        {
+            if (obj.GetComponent<Card>().IsOpen)
+            {
+                canAutoComplete = true;
+            }
+        }
+    }
+    private void AutoComplete()
+    {
+
     }
 }

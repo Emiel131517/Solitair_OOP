@@ -18,6 +18,15 @@ public abstract class Column : MonoBehaviour
             card.GetComponent<Card>().parentColumn = this;
         }
     }
+    public List<GameObject> CopyListNoParent(List<GameObject> list)
+    {
+        List<GameObject> temp = new List<GameObject>();
+        foreach(GameObject obj in list)
+        {
+            list.Add(obj);
+        }
+        return temp;
+    }
     // Add one card on top of this list
     public void AddCardToTopOfList(GameObject card)
     {

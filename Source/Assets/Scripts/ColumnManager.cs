@@ -9,6 +9,7 @@ public class ColumnManager : MonoBehaviour
     private DeckColumn deckColumn;
     [SerializeField]
     private List<GameColumn> gameColumns;
+    private GameManager gameManager;
     private AudioSource flipSound;
 
     // Start is called before the first frame update
@@ -16,6 +17,7 @@ public class ColumnManager : MonoBehaviour
     {
         deck = GameObject.Find("Deck").GetComponent<Deck>();
         deckColumn = GameObject.Find("DeckButton").GetComponent<DeckColumn>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         flipSound = gameObject.GetComponent<AudioSource>();
         StartCoroutine(DealDelay());
     }
@@ -34,6 +36,10 @@ public class ColumnManager : MonoBehaviour
     // Deal the cards to the right columns
     private IEnumerator Deal()
     {
+        foreach(GameObject card in deck.cards)
+        {
+            gameManager.cards.Add(card);
+        }
         int i = 1;
         foreach (GameColumn gameColumn in gameColumns)
         {

@@ -114,7 +114,7 @@ public class DragManager : MonoBehaviour
         float zoffset = 0;
         foreach (GameObject obj in objs)
         {
-            obj.transform.position = new Vector3(mousePos.x, mousePos.y + yoffset, -5 + zoffset);
+            obj.transform.position = new Vector3(mousePos.x, mousePos.y + yoffset, -5 + zoffset); 
             objScaler.IncreaseSize(obj, 0.25f);
             yoffset -= 0.35f;
             zoffset -= 0.1f;
