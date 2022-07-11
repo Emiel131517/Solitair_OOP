@@ -46,13 +46,7 @@ public class GameManager : MonoBehaviour
     }
     private void CheckIfCanAutoComplete()
     {
-        foreach (GameObject obj in cards)
-        {
-            if (obj.GetComponent<Card>().IsOpen)
-            {
-                canAutoComplete = true;
-            }
-        }
+        
     }
     private void AutoComplete()
     {
