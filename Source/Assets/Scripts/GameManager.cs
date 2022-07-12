@@ -8,13 +8,13 @@ public class GameManager : MonoBehaviour
     private GameObject winScreen;
     public List<GameObject> cards;
     [SerializeField] private bool canAutoComplete;
-    private int cardAmount;
+    private int openCards;
     void Start()
     {
         cards = new List<GameObject>();
         finishColumns = new List<FinishColumn>();
         winScreen = GameObject.Find("WinScreen");
-        cardAmount = 0;
+        openCards = 0;
         for (int i = 0; i < 4; i++)
         {
             finishColumns.Add(GameObject.Find("Finish_" + i.ToString()).GetComponent<FinishColumn>());
@@ -34,14 +34,13 @@ public class GameManager : MonoBehaviour
         {
             Finish();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
-            cardAmount = 52;
+            AutoComplete();
         }
         if (CanAutoComplete())
         {
             AutoComplete();
-            cardAmount = 53;
         }
         
     }
@@ -52,18 +51,18 @@ public class GameManager : MonoBehaviour
     }
     private bool CanAutoComplete()
     {
-        if (cardAmount == 52)
+        openCards = 0;
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].GetComponent<Card>().IsOpen)
+            {
+                openCards++;
+            }
+        }
+        if (openCards == 52)
         {
             return true;
         }
-        foreach (GameObject obj in cards)
-        {
-            if (obj.GetComponent<Card>().IsOpen)
-            {
-                cardAmount++;
-            }
-        }
-        cardAmount = 0;
         return false;
     }
     private void AutoComplete()
